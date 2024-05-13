@@ -1,0 +1,33 @@
+body {
+	background-color: rgb(52, 52, 52);
+}
+
+.container {
+	margin: 1% 10%;
+}
+
+.input-group {
+	margin-bottom: 1%;
+}
+
+.input-group span {
+	width: 20%;
+	text-align: center;
+	display: block;
+	background-color: darkgray;
+
+}
+
+.input-group input {
+/*	width: 89%;*/
+	background-color: gray;
+}
+
+
+.btn {
+	width: 20%;
+}
+
+h2 {
+	color:antiquewhite
+}

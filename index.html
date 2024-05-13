@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Фокусировка</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-5">
+
+				<form class="form-group">
+					<!-- масса -->
+					<div class="input-group">
+						<span class="input-group-text">m</span>
+						<input type="text" class="form-control" id="particle_m">
+					</div>
+
+					<!-- скорость -->
+					<div class="input-group">
+						<span class="input-group-text">U</span>
+						<input type="text" class="form-control" id="particle_u">
+					</div>
+
+					<!-- заряд -->
+					<div class="input-group">
+						<span class="input-group-text">q</span>
+						<input type="text" class="form-control" id="partical_q">
+					</div>
+
+					<!-- магнитное поле -->
+					<div class="input-group">
+						<span class="input-group-text">B</span>
+						<input type="text" class="form-control" id="magnetic_field">
+					</div>
+
+					<button type="button" class="btn btn-dark btn-outline-warning" onclick="handleRememberBtn()" id="rememberBtn">Запомнить</button>
+
+				</form>
+
+			</div>
+
+
+
+			<div class="col-7">
+				<h2 id="x1_angle">angle: 3°</h2>
+				<input type="range" class="form-range" min="-40" max="40" step="0.2" value="3" id="angle1" oninput="updateValueAngle1()">
+				<canvas id="canvas1" width="1100" height="1100"></canvas>
+
+				<h2 id="x2_angle">angle: 6°</h2>
+				<input type="range" class="form-range" min="-40" max="40" step="0.2" value="6" id="angle2" oninput="updateValueAngle2()">
+				<canvas id="canvas2" width="1100" height="1100"></canvas>
+
+				<h2 id="x3_angle">angle: 9°</h2>
+				<input type="range" class="form-range" min="-40" max="40" step="0.2" value="9" id="angle3" oninput="updateValueAngle3()">
+				<canvas id="canvas3" width="1100" height="1100"></canvas>
+
+				
+				<h2>summary graphs: </h2>
+				<canvas id="summary_graphs" width="1100" height="1100"></canvas>
+
+
+			</div>
+
+		</div>
+	</div>
+
+	
+
+	
+	<script src="logic.js"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</body>
+
+</html>
