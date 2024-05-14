@@ -71,9 +71,10 @@ function drawGraph(angle, canvas) {
 
     ctx.beginPath();
     for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
-        for (let t = 0; t <= 48.5; t += 0.5) {
+        for (let t = 0; t < 0.5; t += 0.5) {
             let x = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t);
             let y = getZt(particle_u, angle, t);
+            console.log(x, y)
 
             x = canvas.width / 2 - x; // Смещаем x, чтобы график начинался с левого края
 
@@ -94,14 +95,13 @@ function drawSummary() {
     let ctx = summary_graphs.getContext('2d');
     ctx.clearRect(0, 0, summary_graphs.width, summary_graphs.height);
 
-    // Рисуем ось OY
     ctx.beginPath();
-    ctx.moveTo(summary_graphs.width / 2, 0); // Начинаем ось OY от верхнего края
-    ctx.lineTo(summary_graphs.width / 2, summary_graphs.height); // Заканчиваем ось OY на нижнем краю
+    ctx.moveTo(summary_graphs.width / 2, 0);
+    ctx.lineTo(summary_graphs.width / 2, summary_graphs.height);
     ctx.stroke();
     ctx.closePath();
 
-    let colors = ['#ff0000', '#00ff00', '#0000ff']; // Цвета для каждого графика
+    let colors = ['#AA557FFF', '#55AA00FF', '#00007FFF'];
 
     for (let i = 0; i < 3; i++) {
 
@@ -110,6 +110,8 @@ function drawSummary() {
         let color = colors[i]; // Выбираем соответствующий цвет
 
         ctx.beginPath();
+        // ctx.strokeStyle = color;
+
         for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
             for (let t = 0; t <= 48.5; t += 0.5) {
                 let x = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t);
@@ -136,6 +138,10 @@ function handleRememberBtn() {
     particle_u = parseFloat(document.getElementById('particle_u').value);
     particle_q = parseFloat(document.getElementById('partical_q').value);
     magnetic_field = parseFloat(document.getElementById('magnetic_field').value);
+    drawGraph(document.getElementById('angle1').value, document.getElementById('canvas1'));
+    drawGraph(document.getElementById('angle2').value, document.getElementById('canvas2'));
+    drawGraph(document.getElementById('angle3').value, document.getElementById('canvas3'));
+    drawSummary();
 }
 
 window.onload = function () {
