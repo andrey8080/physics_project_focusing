@@ -1,5 +1,5 @@
 body {
-	background-color: rgb(52, 52, 52);
+	background-color: #FF8E42FF;
 }
 
 .container {
@@ -31,3 +31,11 @@ body {
 h2 {
 	color:antiquewhite
 }
+
+canvas {
+	transform: rotate(-90deg);
+}
+
+/*#summary_graphs {
+	transform: rotate(-90deg);
+}*/
