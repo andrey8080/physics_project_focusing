@@ -36,12 +36,12 @@ document.getElementById("angle3").addEventListener("change", function () {
     drawSummary();
 });
 
-// вычисление координат точки в определённый момент
+
 function getXt(m, U, alpha, phi, q, B, t) {
     return (
         (m * U * Math.sin(alpha * Math.PI / 180)) / (q * B)
     ) * (
-            Math.cos(t + phi) - Math.sin(phi)
+            Math.cos(t + phi) - Math.cos(phi)
         )
 }
 
@@ -49,7 +49,7 @@ function getYt(m, U, alpha, phi, q, B, t) {
     return (
         (m * U * Math.sin(alpha * Math.PI / 180)) / (q * B)
     ) * (
-            Math.cos(t + phi) + Math.cos(phi)
+            Math.cos(t + phi) + Math.sin(phi)
         )
 }
 
@@ -57,26 +57,26 @@ function getZt(U, alpha, t) {
     e = U * Math.cos(alpha * Math.PI / 180) * t;
     return e
 }
-// конец блока с вычислениями
+
 
 function drawGraph(angle, canvas) {
     let ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     ctx.beginPath();
-    ctx.moveTo(canvas.width / 2, 0); // Начинаем ось OY от верхнего края
-    ctx.lineTo(canvas.width / 2, canvas.height); // Заканчиваем ось OY на нижнем краю
+    ctx.moveTo(canvas.width / 2, 0);
+    ctx.lineTo(canvas.width / 2, canvas.height);
     ctx.stroke();
     ctx.closePath();
 
     ctx.beginPath();
+
     for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
-        for (let t = 0; t < 0.5; t += 0.5) {
+        for (let t = 0; t <= 48.5; t += 0.5) {
             let x = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t);
             let y = getZt(particle_u, angle, t);
-            console.log(x, y)
 
-            x = canvas.width / 2 - x; // Смещаем x, чтобы график начинался с левого края
+            x = canvas.width / 2 - x;
 
             if (t === 0) {
                 ctx.moveTo(x, y);
@@ -87,7 +87,6 @@ function drawGraph(angle, canvas) {
     }
     ctx.stroke();
 }
-
 
 
 function drawSummary() {
@@ -107,7 +106,7 @@ function drawSummary() {
 
         let angle = document.getElementById('angle' + (i+1)).value;
 
-        let color = colors[i]; // Выбираем соответствующий цвет
+        let color = colors[i];
 
         ctx.beginPath();
         // ctx.strokeStyle = color;
@@ -117,7 +116,7 @@ function drawSummary() {
                 let x = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t);
                 let y = getZt(particle_u, angle, t);
 
-                x = summary_graphs.width / 2 - x; // Смещаем x, чтобы график начинался с левого края
+                x = summary_graphs.width / 2 - x;
 
                 if (t === 0) {
                     ctx.moveTo(x, y);
@@ -127,7 +126,6 @@ function drawSummary() {
             }
         }
         ctx.stroke();
-
     }
 }
 
