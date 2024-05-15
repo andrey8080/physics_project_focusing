@@ -3,6 +3,7 @@ let particle_u = 0;
 let particle_q = 0;
 let magnetic_field = 0;
 
+
 function updateValueAngle1() {
     let angle = document.getElementById('angle1').value;
     document.getElementById('x1_angle').textContent = "angle: " + angle + "°";
@@ -10,8 +11,7 @@ function updateValueAngle1() {
 
 document.getElementById("angle1").addEventListener("change", function () {
     let canvas = document.getElementById('canvas1');
-    drawGraph(this.value, canvas);
-    drawSummary();
+    drawOneGraphAndSummoryWithDelay(this.value, canvas);
 });
 
 function updateValueAngle2() {
@@ -21,8 +21,7 @@ function updateValueAngle2() {
 
 document.getElementById("angle2").addEventListener("change", function () {
     let canvas = document.getElementById('canvas2');
-    drawGraph(this.value, canvas);
-    drawSummary();
+    drawOneGraphAndSummoryWithDelay(this.value, canvas);
 });
 
 function updateValueAngle3() {
@@ -32,8 +31,7 @@ function updateValueAngle3() {
 
 document.getElementById("angle3").addEventListener("change", function () {
     let canvas = document.getElementById('canvas3');
-    drawGraph(this.value, canvas);
-    drawSummary();
+    drawOneGraphAndSummoryWithDelay(this.value, canvas);
 });
 
 
@@ -59,7 +57,7 @@ function getZt(U, alpha, t) {
 }
 
 
-function drawGraph(angle, canvas) {
+function drawGraph(angle, canvas, percent) {
     let ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -71,10 +69,18 @@ function drawGraph(angle, canvas) {
 
     ctx.beginPath();
 
+<<<<<<< HEAD
     for (let phi = 0; phi < 2 * Math.PI; phi += 0.3) {
         for (let t = 0; t <= 48.5; t += 0.2) {
             let x = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t);
             let y = getZt(particle_u, angle, t);
+=======
+    for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
+        let x, y;
+        for (let t = 0; t <= 48.5 * percent; t += 0.5) {
+            x = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t);
+            y = getZt(particle_u, angle, t);
+>>>>>>> c35baf3e6207f64d9122f37c04f997d181be650e
 
             x = canvas.width / 2 - x;
 
@@ -84,12 +90,13 @@ function drawGraph(angle, canvas) {
                 ctx.lineTo(x, y);
             }
         }
+        ctx.arc(x, y, 3, 0 * Math.PI, 2 * Math.PI);
     }
     ctx.stroke();
 }
 
 
-function drawSummary() {
+function drawSummary(percent) {
     let summary_graphs = document.getElementById('summary_graphs');
     let ctx = summary_graphs.getContext('2d');
     ctx.clearRect(0, 0, summary_graphs.width, summary_graphs.height);
@@ -109,12 +116,12 @@ function drawSummary() {
         let color = colors[i];
 
         ctx.beginPath();
-        // ctx.strokeStyle = color;
-
+        ctx.strokeStyle = colors[i];
         for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
-            for (let t = 0; t <= 48.5; t += 0.5) {
-                let x = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t);
-                let y = getZt(particle_u, angle, t);
+            let x, y;
+            for (let t = 0; t <= 48.5 * percent; t += 0.5) {
+                x = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t);
+                y = getZt(particle_u, angle, t);
 
                 x = summary_graphs.width / 2 - x;
 
@@ -124,11 +131,35 @@ function drawSummary() {
                     ctx.lineTo(x, y);
                 }
             }
+            ctx.arc(x, y, 3, 0 * Math.PI, 2 * Math.PI);
         }
         ctx.stroke();
     }
 }
 
+function drawAllWithDelay() {
+    let delay = 0;
+    for (let percent = 0; percent < 1; percent += 0.005) {
+        setTimeout(() => {
+            drawGraph(document.getElementById('angle1').value, document.getElementById('canvas1'), percent);
+            drawGraph(document.getElementById('angle2').value, document.getElementById('canvas2'), percent);
+            drawGraph(document.getElementById('angle3').value, document.getElementById('canvas3'), percent);
+            drawSummary(percent);
+        }, delay);
+        delay += 20;
+    }
+}
+
+function drawOneGraphAndSummoryWithDelay(angle, ctx) {
+    let delay = 0;
+    for (let percent = 0; percent < 1; percent += 0.005) {
+        setTimeout(() => {
+            drawGraph(angle, ctx, percent);
+            drawSummary(percent);
+        }, delay);
+        delay += 20;
+}
+}
 
 
 function handleRememberBtn() {
@@ -136,10 +167,8 @@ function handleRememberBtn() {
     particle_u = parseFloat(document.getElementById('particle_u').value);
     particle_q = parseFloat(document.getElementById('partical_q').value);
     magnetic_field = parseFloat(document.getElementById('magnetic_field').value);
-    drawGraph(document.getElementById('angle1').value, document.getElementById('canvas1'));
-    drawGraph(document.getElementById('angle2').value, document.getElementById('canvas2'));
-    drawGraph(document.getElementById('angle3').value, document.getElementById('canvas3'));
-    drawSummary();
+    
+    drawAllWithDelay();
 }
 
 window.onload = function () {
@@ -152,15 +181,15 @@ window.onload = function () {
 
     document.getElementById('rememberBtn').click;
 
-    drawGraph(document.getElementById('angle1').value, document.getElementById('canvas1'));
-    drawGraph(document.getElementById('angle2').value, document.getElementById('canvas2'));
-    drawGraph(document.getElementById('angle3').value, document.getElementById('canvas3'));
-    drawSummary();
+    drawAllWithDelay();
 }
 
+<<<<<<< HEAD
 
 // добавить поперечные сечения на точках фокусировки
 // необходимо:
 //     - вычислить расстояние от начала до точки фокусировки у минимального угла
 //     - построить график поперченого сечения для совмещения графиков в орт. проекции
 //     - попутно будет сделана подпись расстояния точек фокусировки от начала координат
+=======
+>>>>>>> c35baf3e6207f64d9122f37c04f997d181be650e
