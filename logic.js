@@ -132,7 +132,7 @@ function drawSummary(percent) {
 
 function drawAllWithDelay() {
     let delay = 0;
-    for (let percent = 0; percent < 1; percent += 0.005) {
+    for (let percent = 0; percent <= 1; percent += 0.005) {
         setTimeout(() => {
             drawGraph(document.getElementById('angle1').value, document.getElementById('canvas1'), percent);
             drawGraph(document.getElementById('angle2').value, document.getElementById('canvas2'), percent);
@@ -145,8 +145,9 @@ function drawAllWithDelay() {
 
 function drawOneGraphAndSummoryWithDelay(angle, ctx) {
     let delay = 0;
-    for (let percent = 0; percent < 1; percent += 0.005) {
+    for (let percent = 0; percent <= 1; percent += 0.005) {
         setTimeout(() => {
+            disableInputAndUnlockAfter(percent);
             drawGraph(angle, ctx, percent);
             drawSummary(percent);
         }, delay);
@@ -154,6 +155,19 @@ function drawOneGraphAndSummoryWithDelay(angle, ctx) {
 }
 }
 
+function disableInputAndUnlockAfter(percent) {
+    console.log(percent)
+    if (percent == 0) {
+        document.getElementById('angle1').disabled = true;
+        document.getElementById('angle2').disabled = true;
+        document.getElementById('angle3').disabled = true;
+    } else if (percent >= 0.95) {
+        document.getElementById('angle1').disabled = false;
+        document.getElementById('angle2').disabled = false;
+        document.getElementById('angle3').disabled = false;
+    }
+
+}
 
 function handleRememberBtn() {
     particle_m = parseFloat(document.getElementById('particle_m').value);
