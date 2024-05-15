@@ -39,7 +39,7 @@ function getXt(m, U, alpha, phi, q, B, t) {
     return (
         (m * U * Math.sin(alpha * Math.PI / 180)) / (q * B)
     ) * (
-            Math.cos(t + phi) - Math.cos(phi)
+            Math.sin(phi + t - Math.PI / 2) + Math.cos(phi)
         )
 }
 
@@ -47,7 +47,7 @@ function getYt(m, U, alpha, phi, q, B, t) {
     return (
         (m * U * Math.sin(alpha * Math.PI / 180)) / (q * B)
     ) * (
-            Math.cos(t + phi) + Math.sin(phi)
+            Math.cos(phi + t - Math.PI / 2) - Math.sin(phi)
         )
 }
 

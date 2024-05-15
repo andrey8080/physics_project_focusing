@@ -9,13 +9,20 @@ let renderer = new THREE.WebGLRenderer();
 renderer.setSize(1200, 1200);
 document.body.appendChild(renderer.domElement);
 
+let renderer1 = new THREE.WebGLRenderer();
+renderer1.setSize(1200, 1200);
+document.body.appendChild(renderer1.domElement);
 
-// Создаем камеру
-let camera = new THREE.PerspectiveCamera(75, 1, 0.1, 2000);
-let orbit = new OrbitControls(camera, renderer.domElement);
-camera.position.set(500, 500, 1000);
+let camera = new THREE.PerspectiveCamera(90, 1, 0.1, 2000);
+camera.position.set(250, 500, 1000);
+camera.lookAt(-0,-0,500);
+
+let camera1 = new THREE.PerspectiveCamera(90, 1, 0.1, 2000);
+let orbit = new OrbitControls(camera1, renderer1.domElement);
+camera1.position.set(0, 0, 1500);
 orbit.update()
-camera.lookAt(0,0,0);
+camera1.lookAt(0,0,0);
+
 
 function drawPlot(angle, color, percent) {
     for (let phi = 0.0; phi <= 2 * Math.PI; phi += 0.2) {
@@ -41,10 +48,10 @@ function redraw() {
                 scene.remove(scene.children[0]); 
             }
         
-            let axes =new THREE.AxesHelper(50);
+            let axes =new THREE.AxesHelper(1000);
             scene.add(axes);
         
-            let grid = new THREE.GridHelper(50);
+            let grid = new THREE.GridHelper(30);
             scene.add(grid);
         
             const boxGeometry = new THREE.BoxGeometry();
@@ -78,5 +85,6 @@ document.getElementById("angle3").addEventListener("change", function () {
 
 function animate(time) {
     renderer.render(scene, camera);
+    renderer1.render(scene, camera1)
 }
 renderer.setAnimationLoop(animate)
