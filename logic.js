@@ -71,8 +71,8 @@ function drawGraph(angle, canvas) {
 
     ctx.beginPath();
 
-    for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
-        for (let t = 0; t <= 48.5; t += 0.5) {
+    for (let phi = 0; phi < 2 * Math.PI; phi += 0.3) {
+        for (let t = 0; t <= 48.5; t += 0.2) {
             let x = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t);
             let y = getZt(particle_u, angle, t);
 
@@ -157,3 +157,10 @@ window.onload = function () {
     drawGraph(document.getElementById('angle3').value, document.getElementById('canvas3'));
     drawSummary();
 }
+
+
+// добавить поперечные сечения на точках фокусировки
+// необходимо:
+//     - вычислить расстояние от начала до точки фокусировки у минимального угла
+//     - построить график поперченого сечения для совмещения графиков в орт. проекции
+//     - попутно будет сделана подпись расстояния точек фокусировки от начала координат
