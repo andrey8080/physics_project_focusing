@@ -1,4 +1,5 @@
 проект по физике
 
-npm install three
+npm install
+
 npm run dev
