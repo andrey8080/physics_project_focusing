@@ -79,6 +79,10 @@ document.getElementById("angle3").addEventListener("change", function () {
     redraw();
 })
 
+document.getElementById("rememberBtn").addEventListener("click", function() {
+    redraw();
+})
+
 function animate(time) {
     renderer.render(scene, camera);
     renderer1.render(scene, camera1);

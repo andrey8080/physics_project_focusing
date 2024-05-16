@@ -68,21 +68,40 @@ function drawGraph(angle, canvas) {
     ctx.lineWidth = 1;
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
-    ctx.strokeStyle = '#000000'
+    ctx.strokeStyle = '#FFFFFF'
     ctx.beginPath();
     ctx.moveTo(0, canvas.height / 2);
     ctx.lineTo(canvas.width, canvas.height / 2);
     ctx.stroke();
     ctx.closePath();
 
-    ctx.beginPath();
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.fillStyle = '#FFFFFF'; // Цвет текста
+    ctx.font = '16px Comic Sans'; // Размер и шрифт текста
 
+    ctx.beginPath();
+    for (let t = 0; t <= 58.5; t += 2*Math.PI ) {
+        let x = getZt(particle_u, angle, t) * scale;
+        let rawX = getZt(particle_u, angle, t);
+
+        ctx.moveTo(3.5 * x, canvas.height/2 - 50);
+        ctx.lineTo(3.5 * x, canvas.height/2 + 50);
+
+        // Подписываем чёрточки числами rawX
+        ctx.fillText(rawX.toFixed(2), 3.5 * x - 20, canvas.height/2 + 80); // Отображаем числа ниже чёрточек
+    }
+    ctx.stroke();
+    ctx.closePath();
+
+
+
+    ctx.beginPath();
     for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
-        for (let t = 0; t <= 48.5; t += 0.5) {
+        for (let t = 0; t <= 58.5; t += 0.5) {
             let y = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t) * scale;
             let x = getZt(particle_u, angle, t) * scale;
 
-            x = canvas.width - 3.5 * x;
+            x = 3.5 * x;
             y = canvas.height / 2 - y;
 
             if (t === 0) {
@@ -104,7 +123,7 @@ function drawSummary() {
     ctx.lineWidth = 1;
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
-
+    ctx.strokeStyle = '#FFFFFF'
     ctx.beginPath();
     ctx.moveTo(0, summary_graphs.height / 2);
     ctx.lineTo(summary_graphs.width, summary_graphs.height / 2);
@@ -122,11 +141,11 @@ function drawSummary() {
         let startY = null;
 
         for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
-            for (let t = 0; t <= 48.5; t += 0.5) {
+            for (let t = 0; t <= 58.5; t += 0.5) {
                 let y = getYt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t) * scale;
                 let x = getZt(particle_u, angle, t) * scale;
 
-                x = summary_graphs.width - 4 * x;
+                x = 3.5 * x;
                 y = summary_graphs.height / 2 - y;
 
                 if (t === 0) {

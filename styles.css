@@ -100,7 +100,6 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 #canvas1, #canvas2, #canvas3, #summary_graphs {
 	background: radial-gradient(circle, #444444, #000000);
-	transform: rotate(180deg);
  	height: 300px; 
 	display: block;
     max-width: 100%;
