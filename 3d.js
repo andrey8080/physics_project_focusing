@@ -10,9 +10,9 @@ let renderer1 = new THREE.WebGLRenderer();
 renderer1.setSize(1200, 1200);
 document.body.appendChild(renderer1.domElement);
 
-let camera = new THREE.PerspectiveCamera(90, 1, 0.1, 2000);
+let camera = new THREE.PerspectiveCamera(85, 1, 0.1, 2000);
 camera.position.set(250, 500, 1000);
-camera.lookAt(-0,-0,500);
+camera.lookAt(0,0,500);
 
 let camera1 = new THREE.PerspectiveCamera(90, 1, 0.1, 2000);
 camera1.position.set(0, 0, 1500);
@@ -53,12 +53,13 @@ function redraw() {
             const boxMaterial = new THREE.MeshBasicMaterial({color: 0xaaaaaa});
             const box = new THREE.Mesh(boxGeometry, boxMaterial);
             scene.add(box);
-        
-            particle_m = parseFloat(document.getElementById('particle_m').value) ?? 0.5;
-            particle_u = parseFloat(document.getElementById('particle_u').value) ?? 20;
-            particle_q = parseFloat(document.getElementById('partical_q').value) ?? 0.08;
-            magnetic_field = parseFloat(document.getElementById('magnetic_field').value) ?? 0.3;
-        
+            
+            let a = document.getElementById('particle_m').value
+            particle_m = parseFloat(document.getElementById('particle_m').value);
+            particle_u = parseFloat(document.getElementById('particle_u').value);
+            particle_q = parseFloat(document.getElementById('partical_q').value);
+            magnetic_field = parseFloat(document.getElementById('magnetic_field').value);
+            console.log(particle_m)
             drawPlot(parseFloat(document.getElementById('angle1').value), 0xAA557F, percent);
             drawPlot(parseFloat(document.getElementById('angle2').value), 0x55AA00, percent);
             drawPlot(parseFloat(document.getElementById('angle3').value), 0x00007F, percent);
@@ -81,6 +82,12 @@ document.getElementById("angle3").addEventListener("change", function () {
 function animate(time) {
     renderer.render(scene, camera);
     renderer1.render(scene, camera1);
+    document.getElementsByTagName('canvas')[4].setAttribute("width", 1200);
+    document.getElementsByTagName('canvas')[4].setAttribute("height", 1200);
+    document.getElementsByTagName('canvas')[5].setAttribute("width", 1200);
+    document.getElementsByTagName('canvas')[5].setAttribute("height", 1200);
     camera1.position.set(0, 0, 1200 - ((time / 100) % 1200));
 }
+document.getElementsByTagName('canvas')[4].setAttribute('style', 'display: block; margin: 0 auto; margin-bottom: 3%');
+document.getElementsByTagName('canvas')[5].setAttribute('style', 'display: block; margin: 0 auto;');
 renderer.setAnimationLoop(animate)

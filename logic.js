@@ -68,7 +68,7 @@ function drawGraph(angle, canvas) {
     ctx.lineWidth = 1;
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
-
+    ctx.strokeStyle = '#000000'
     ctx.beginPath();
     ctx.moveTo(0, canvas.height / 2);
     ctx.lineTo(canvas.width, canvas.height / 2);
@@ -79,7 +79,7 @@ function drawGraph(angle, canvas) {
 
     for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
         for (let t = 0; t <= 48.5; t += 0.5) {
-            let y = getYt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t) * scale;
+            let y = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t) * scale;
             let x = getZt(particle_u, angle, t) * scale;
 
             x = canvas.width - 3.5 * x;
@@ -95,7 +95,6 @@ function drawGraph(angle, canvas) {
     ctx.strokeStyle = '#1CAA76FF';
     ctx.stroke();
 }
-
 
 function drawSummary() {
     let summary_graphs = document.getElementById('summary_graphs');
@@ -127,7 +126,7 @@ function drawSummary() {
                 let y = getYt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t) * scale;
                 let x = getZt(particle_u, angle, t) * scale;
 
-                x = summary_graphs.width - 3.5 * x;
+                x = summary_graphs.width - 4 * x;
                 y = summary_graphs.height / 2 - y;
 
                 if (t === 0) {
@@ -139,10 +138,11 @@ function drawSummary() {
                 }
             }
         }
-        ctx.strokeStyle = color; // Установка розового цвета
+        ctx.strokeStyle = color;
         ctx.stroke();
     }
 }
+
 
 
 
@@ -168,12 +168,17 @@ function setCanvasSize(canvas) {
     canvas.width = containerWidth;
     canvas.height = containerHeight;
 
-    drawGraph(document.getElementById('angle1').value, canvas);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
     let canvases = document.querySelectorAll('canvas');
 
+    window.addEventListener('resize', updateCanvasSizes);
+
+    document.getElementById('particle_m').value = 0.5;
+    document.getElementById('particle_u').value = 20;
+    document.getElementById('partical_q').value = 0.08;
+    document.getElementById('magnetic_field').value = 0.3;
     function updateCanvasSizes() {
         canvases.forEach(canvas => {
             setCanvasSize(canvas);
@@ -186,12 +191,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
     updateCanvasSizes();
 
-    window.addEventListener('resize', updateCanvasSizes);
 
-    document.getElementById('particle_m').value = 0.5;
-    document.getElementById('particle_u').value = 20;
-    document.getElementById('partical_q').value = 0.08;
-    document.getElementById('magnetic_field').value = 0.3;
+
+
+
+
 
     handleRememberBtn();
 });
