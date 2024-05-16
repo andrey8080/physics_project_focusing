@@ -2,7 +2,11 @@
 
 ### Формулы для определения координат частицы в определённый момент времени
 
-$$\begin{align*} & f(x) = \frac{m \cdot U \cdot \sin\left(\alpha \cdot \frac{\pi}{180}\right)}{q \cdot B} \cdot \left( \sin\left(\phi + t - \frac{\pi}{2}\right) + \cos(\phi) \right), \\ & f(y) = \frac{m \cdot U \cdot \sin\left(\alpha \cdot \frac{\pi}{180}\right)}{q \cdot B} \cdot \left( \cos\left(\phi + t - \frac{\pi}{2}\right) - \sin(\phi) \right), \\ & f(z) = U \cdot \cos\left(\alpha \cdot \frac{\pi}{180}\right) \cdot t. \end{align*} $$
+$$\begin{align*} & f(x) = \frac{m \cdot U \cdot \sin\left(\alpha \cdot \frac{\pi}{180}\right)}{q \cdot B} \cdot \left( \sin\left(\phi + t - \frac{\pi}{2}\right) + \cos(\phi) \right), \end{align*} $$
+
+$$\begin{align*} & f(y) = \frac{m \cdot U \cdot \sin\left(\alpha \cdot \frac{\pi}{180}\right)}{q \cdot B} \cdot \left( \cos\left(\phi + t - \frac{\pi}{2}\right) - \sin(\phi) \right), \\ & f(z) = U \cdot \cos\left(\alpha \cdot \frac{\pi}{180}\right) \cdot t. \end{align*} $$
+
+$$\begin{align*} & f(z) = U \cdot \cos\left(\alpha \cdot \frac{\pi}{180}\right) \cdot t. \end{align*} $$
 
 ---
 
