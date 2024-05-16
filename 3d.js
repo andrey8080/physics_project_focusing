@@ -1,6 +1,3 @@
-import * as THREE from 'three'
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
 // Создаем сцену
 let scene = new THREE.Scene();
 scene.backgroung = new THREE.Color(0x123123);
@@ -18,9 +15,7 @@ camera.position.set(250, 500, 1000);
 camera.lookAt(-0,-0,500);
 
 let camera1 = new THREE.PerspectiveCamera(90, 1, 0.1, 2000);
-let orbit = new OrbitControls(camera1, renderer1.domElement);
 camera1.position.set(0, 0, 1500);
-orbit.update()
 camera1.lookAt(0,0,0);
 
 
@@ -85,6 +80,7 @@ document.getElementById("angle3").addEventListener("change", function () {
 
 function animate(time) {
     renderer.render(scene, camera);
-    renderer1.render(scene, camera1)
+    renderer1.render(scene, camera1);
+    camera1.position.set(0, 0, 1200 - ((time / 100) % 1200));
 }
 renderer.setAnimationLoop(animate)
