@@ -2,7 +2,7 @@ let particle_m = 0;
 let particle_u = 0;
 let particle_q = 0;
 let magnetic_field = 0;
-
+let scale = 0.5;
 
 function updateValueAngle1() {
     let angle = document.getElementById('angle1').value;
@@ -11,7 +11,8 @@ function updateValueAngle1() {
 
 document.getElementById("angle1").addEventListener("change", function () {
     let canvas = document.getElementById('canvas1');
-    drawOneGraphAndSummoryWithDelay(this.value, canvas);
+    drawGraph(this.value, canvas);
+    drawSummary();
 });
 
 function updateValueAngle2() {
@@ -21,7 +22,8 @@ function updateValueAngle2() {
 
 document.getElementById("angle2").addEventListener("change", function () {
     let canvas = document.getElementById('canvas2');
-    drawOneGraphAndSummoryWithDelay(this.value, canvas);
+    drawGraph(this.value, canvas);
+    drawSummary();
 });
 
 function updateValueAngle3() {
@@ -31,7 +33,8 @@ function updateValueAngle3() {
 
 document.getElementById("angle3").addEventListener("change", function () {
     let canvas = document.getElementById('canvas3');
-    drawOneGraphAndSummoryWithDelay(this.value, canvas);
+    drawGraph(this.value, canvas);
+    drawSummary();
 });
 
 
@@ -39,7 +42,7 @@ function getXt(m, U, alpha, phi, q, B, t) {
     return (
         (m * U * Math.sin(alpha * Math.PI / 180)) / (q * B)
     ) * (
-            Math.cos(t + phi) - Math.cos(phi)
+            Math.sin(phi + t - Math.PI / 2) + Math.cos(phi)
         )
 }
 
@@ -47,7 +50,7 @@ function getYt(m, U, alpha, phi, q, B, t) {
     return (
         (m * U * Math.sin(alpha * Math.PI / 180)) / (q * B)
     ) * (
-            Math.cos(t + phi) + Math.sin(phi)
+            Math.cos(phi + t - Math.PI / 2) - Math.sin(phi)
         )
 }
 
@@ -57,32 +60,30 @@ function getZt(U, alpha, t) {
 }
 
 
-function drawGraph(angle, canvas, percent) {
+
+function drawGraph(angle, canvas) {
     let ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    ctx.lineWidth = 1;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+
     ctx.beginPath();
-    ctx.moveTo(canvas.width / 2, 0);
-    ctx.lineTo(canvas.width / 2, canvas.height);
+    ctx.moveTo(0, canvas.height / 2);
+    ctx.lineTo(canvas.width, canvas.height / 2);
     ctx.stroke();
     ctx.closePath();
 
     ctx.beginPath();
 
-<<<<<<< HEAD
-    for (let phi = 0; phi < 2 * Math.PI; phi += 0.3) {
-        for (let t = 0; t <= 48.5; t += 0.2) {
-            let x = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t);
-            let y = getZt(particle_u, angle, t);
-=======
     for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
-        let x, y;
-        for (let t = 0; t <= 48.5 * percent; t += 0.5) {
-            x = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t);
-            y = getZt(particle_u, angle, t);
->>>>>>> c35baf3e6207f64d9122f37c04f997d181be650e
+        for (let t = 0; t <= 48.5; t += 0.5) {
+            let y = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t) * scale;
+            let x = getZt(particle_u, angle, t) * scale;
 
-            x = canvas.width / 2 - x;
+            x = canvas.width - 3.5 * x;
+            y = canvas.height / 2 - y;
 
             if (t === 0) {
                 ctx.moveTo(x, y);
@@ -90,76 +91,59 @@ function drawGraph(angle, canvas, percent) {
                 ctx.lineTo(x, y);
             }
         }
-        ctx.arc(x, y, 3, 0 * Math.PI, 2 * Math.PI);
     }
+    ctx.strokeStyle = '#1CAA76FF';
     ctx.stroke();
 }
 
 
-function drawSummary(percent) {
+function drawSummary() {
     let summary_graphs = document.getElementById('summary_graphs');
     let ctx = summary_graphs.getContext('2d');
     ctx.clearRect(0, 0, summary_graphs.width, summary_graphs.height);
 
+    ctx.lineWidth = 1;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+
     ctx.beginPath();
-    ctx.moveTo(summary_graphs.width / 2, 0);
-    ctx.lineTo(summary_graphs.width / 2, summary_graphs.height);
+    ctx.moveTo(0, summary_graphs.height / 2);
+    ctx.lineTo(summary_graphs.width, summary_graphs.height / 2);
     ctx.stroke();
     ctx.closePath();
 
-    let colors = ['#AA557FFF', '#55AA00FF', '#00007FFF'];
-
+    let color = '#1CAA76FF'; 
+    
     for (let i = 0; i < 3; i++) {
-
-        let angle = document.getElementById('angle' + (i+1)).value;
-
-        let color = colors[i];
+        let angle = document.getElementById('angle' + (i + 1)).value;
 
         ctx.beginPath();
-        ctx.strokeStyle = colors[i];
-        for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
-            let x, y;
-            for (let t = 0; t <= 48.5 * percent; t += 0.5) {
-                x = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t);
-                y = getZt(particle_u, angle, t);
 
-                x = summary_graphs.width / 2 - x;
+        let startX = null;
+        let startY = null;
+
+        for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
+            for (let t = 0; t <= 48.5; t += 0.5) {
+                let y = getYt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t) * scale;
+                let x = getZt(particle_u, angle, t) * scale;
+
+                x = summary_graphs.width - 4 * x;
+                y = summary_graphs.height / 2 - y;
 
                 if (t === 0) {
-                    ctx.moveTo(x, y);
+                    startX = x;
+                    startY = y;
+                    ctx.moveTo(startX, startY);
                 } else {
                     ctx.lineTo(x, y);
                 }
             }
-            ctx.arc(x, y, 3, 0 * Math.PI, 2 * Math.PI);
         }
+        ctx.strokeStyle = color; // Установка розового цвета
         ctx.stroke();
     }
 }
 
-function drawAllWithDelay() {
-    let delay = 0;
-    for (let percent = 0; percent < 1; percent += 0.005) {
-        setTimeout(() => {
-            drawGraph(document.getElementById('angle1').value, document.getElementById('canvas1'), percent);
-            drawGraph(document.getElementById('angle2').value, document.getElementById('canvas2'), percent);
-            drawGraph(document.getElementById('angle3').value, document.getElementById('canvas3'), percent);
-            drawSummary(percent);
-        }, delay);
-        delay += 20;
-    }
-}
-
-function drawOneGraphAndSummoryWithDelay(angle, ctx) {
-    let delay = 0;
-    for (let percent = 0; percent < 1; percent += 0.005) {
-        setTimeout(() => {
-            drawGraph(angle, ctx, percent);
-            drawSummary(percent);
-        }, delay);
-        delay += 20;
-}
-}
 
 
 function handleRememberBtn() {
@@ -167,29 +151,47 @@ function handleRememberBtn() {
     particle_u = parseFloat(document.getElementById('particle_u').value);
     particle_q = parseFloat(document.getElementById('partical_q').value);
     magnetic_field = parseFloat(document.getElementById('magnetic_field').value);
-    
-    drawAllWithDelay();
+
+    let modal = new bootstrap.Modal(document.getElementById('myModal'));
+    modal.hide();
+
+    drawGraph(document.getElementById('angle1').value, document.getElementById('canvas1'));
+    drawGraph(document.getElementById('angle2').value, document.getElementById('canvas2'));
+    drawGraph(document.getElementById('angle3').value, document.getElementById('canvas3'));
+    drawSummary();
 }
 
-window.onload = function () {
+function setCanvasSize(canvas) {
+    let containerWidth = canvas.parentNode.clientWidth;
+    let containerHeight = canvas.parentNode.clientHeight;
+
+    canvas.width = containerWidth;
+    canvas.height = containerHeight;
+
+    drawGraph(document.getElementById('angle1').value, canvas);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    let canvases = document.querySelectorAll('canvas');
+
+    function updateCanvasSizes() {
+        canvases.forEach(canvas => {
+            setCanvasSize(canvas);
+        });
+        drawGraph(document.getElementById('angle1').value, document.getElementById('canvas1'));
+        drawGraph(document.getElementById('angle2').value, document.getElementById('canvas2'));
+        drawGraph(document.getElementById('angle3').value, document.getElementById('canvas3'));
+        drawSummary();
+    }
+
+    updateCanvasSizes();
+
+    window.addEventListener('resize', updateCanvasSizes);
+
     document.getElementById('particle_m').value = 0.5;
     document.getElementById('particle_u').value = 20;
     document.getElementById('partical_q').value = 0.08;
     document.getElementById('magnetic_field').value = 0.3;
 
     handleRememberBtn();
-
-    document.getElementById('rememberBtn').click;
-
-    drawAllWithDelay();
-}
-
-<<<<<<< HEAD
-
-// добавить поперечные сечения на точках фокусировки
-// необходимо:
-//     - вычислить расстояние от начала до точки фокусировки у минимального угла
-//     - построить график поперченого сечения для совмещения графиков в орт. проекции
-//     - попутно будет сделана подпись расстояния точек фокусировки от начала координат
-=======
->>>>>>> c35baf3e6207f64d9122f37c04f997d181be650e
+});

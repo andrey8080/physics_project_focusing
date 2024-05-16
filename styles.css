@@ -1,37 +1,135 @@
 body {
-	background-color: #aa00ff8c;
+	background-image: url("body2.gif");
+	background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
 }
 
 .container {
 	margin: 1% 10%;
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 90%;
 }
 
-.input-group {
-	margin-bottom: 1%;
-}
-
-.input-group span {
-	width: 20%;
+.input-group span{
+	
 	text-align: center;
-	display: block;
-	background-color: darkgray;
-
+	margin: 5%;
+	background-color: #288A66FF;
+	color: black;
+	border-radius: 50px;
+	font-size: 100%;
 }
 
 .input-group input {
-/*	width: 89%;*/
-	background-color: gray;
+	text-align: center;
+	width: 150px;
+	margin: 5%;
+	background-color: #288A66FF;
+	color: black;
+	border-radius: 50px;
+	font-size: 100%;
 }
 
+input[type="range"] {
+	margin: 2%;
+    max-width: 250px;
+    max-height: 500px;
+    height: 30px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    background-color: #21C488; 
+    border: 1px solid #000000; 
+    width: 16px; 
+    height: 13px; 
+    border-radius: 50%; 
+    cursor: pointer; 
+}
+
+
+input[type="range"]::-webkit-slider-runnable-track {
+    background-color: #BFBFBF; 
+    height: 8px; 
+    opacity: 0.7;
+    border-radius: 5px; 
+}
+
+
+
+.modal-content{
+	display: block;
+	margin-left: 15% ;
+	height: 100%;
+	width: 70%;
+	background-color: black;
+	border-radius: 70px;
+}
+
+
+#x1_angle,
+#x2_angle,
+#x3_angle{
+	font-size: 200%;
+	color: #B5B5B5FF;
+}
 
 .btn {
-	width: 20%;
+	max-width: 250px;
+	width: fit-content;
+	height: 35px;
+	color: antiquewhite;
+	font-size: 120%;
+	background-color: #6C6A6AC9;
+	border-radius: 25px;
+	border: 1px solid #000000;
+	margin-bottom:5% ;
+	margin-top: 10%;
+	display: flex; 
+    justify-content: center; 
+    align-items: center; 
 }
 
-h2 {
-	color:antiquewhite
+.btn:hover {
+    background-color: #21C488; 
 }
+
+
 
 canvas {
-	transform: rotate(-90deg);
+	background: radial-gradient(circle, #444444, #000000);
+	transform: rotate(180deg);
+	height: 300px; 
+	display: block;
+    max-width: 100%;
+    max-height: 450px;
+    margin-left: 1%;
+    margin-right: 10%;
+    border-radius: 50px;
 }
+
+.col-7 {
+	background-color: #F0E9E0FF;
+    flex: 0 0 auto;
+    width: 100%;
+    margin-left: 10%;
+}
+.row {
+	max-height: 30%;
+	display: block;
+	margin-bottom: 10%;
+}
+
+.row>* {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 80%;
+}
+
+
+#summary_graphs {
+  margin-top: 5%;
+}
+
