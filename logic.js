@@ -79,7 +79,7 @@ function drawGraph(angle, canvas) {
 
     for (let phi = 0; phi < 2 * Math.PI; phi += 0.2) {
         for (let t = 0; t <= 48.5; t += 0.5) {
-            let y = getXt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t) * scale;
+            let y = getYt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t) * scale;
             let x = getZt(particle_u, angle, t) * scale;
 
             x = canvas.width - 3.5 * x;
@@ -127,7 +127,7 @@ function drawSummary() {
                 let y = getYt(particle_m, particle_u, angle, phi, particle_q, magnetic_field, t) * scale;
                 let x = getZt(particle_u, angle, t) * scale;
 
-                x = summary_graphs.width - 4 * x;
+                x = summary_graphs.width - 3.5 * x;
                 y = summary_graphs.height / 2 - y;
 
                 if (t === 0) {
