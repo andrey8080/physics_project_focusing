@@ -59,7 +59,6 @@ function redraw() {
             particle_u = parseFloat(document.getElementById('particle_u').value);
             particle_q = parseFloat(document.getElementById('partical_q').value);
             magnetic_field = parseFloat(document.getElementById('magnetic_field').value);
-            console.log(particle_m)
             drawPlot(parseFloat(document.getElementById('angle1').value), 0xAA557F, percent);
             drawPlot(parseFloat(document.getElementById('angle2').value), 0x55AA00, percent);
             drawPlot(parseFloat(document.getElementById('angle3').value), 0x00007F, percent);
